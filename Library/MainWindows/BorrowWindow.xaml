@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="BorrowWindow" Height="452" Width="762">
     <Window.Resources>
-        <RoutedUICommand x:Key="Edit" Text="Edit" />
         <RoutedUICommand x:Key="Delete" Text="Delete" />
         <RoutedUICommand x:Key="Mark" Text="Mark" />
     </Window.Resources>
