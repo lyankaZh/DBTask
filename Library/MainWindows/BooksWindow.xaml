@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="Books" Height="455.909" Width="695.295" Icon="/Library;component/library.ico">
+        Title="Books" Height="455.909" Width="727.295" Icon="/Library;component/library.ico">
     <Window.Resources>
         <RoutedUICommand x:Key="Edit" Text="Edit" />
         <RoutedUICommand x:Key="Delete" Text="Delete" />
@@ -34,13 +34,13 @@
             <TextBox x:Name="searchTextTextBox" Height="30" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="Enter text here..." GotFocus="searchTextTextBox_GotFocus" LostFocus="searchTextTextBox_LostFocus"/>
             <Button x:Name="searchButton" Content="Search" Height="30" VerticalAlignment="Top" Width="59" Click="searchButton_Click" Margin="0,10,0,0"/>
         </ToolBar>
-        <DataGrid x:Name="booksTable" Margin="16,55,10,0" VerticalAlignment="Top" AutoGenerateColumns="False" ItemsSource="{Binding Books}" IsReadOnly="True" CanUserReorderColumns="False" Background="White">
+        <DataGrid x:Name="booksTable" Margin="16,55,10,0" VerticalAlignment="Top" AutoGenerateColumns="False" ItemsSource="{Binding Books}" IsReadOnly="True" CanUserReorderColumns="False" Background="White" FontFamily="Bookman Old Style">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding BookId}" Width="*" />
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Authors" Binding="{Binding Authors}" Width="*"/>
                 <DataGridTextColumn Header="Year" Binding="{Binding Year}" Width="*"/>
-                <DataGridTextColumn Header="Amount of pages" Binding="{Binding Pages}" Width="*"/>
+                <DataGridTextColumn Header="Pages" Binding="{Binding Pages}" Width="*"/>
                 <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" Width="*"/>
                 <DataGridTextColumn Header="Language" Binding="{Binding Language}" Width="*"/>
                 <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" />

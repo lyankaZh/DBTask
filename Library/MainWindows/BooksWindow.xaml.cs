@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Domain.Models;
 using Domain.Repository;
@@ -117,7 +118,12 @@ namespace Library.MainWindows
 
         private void searchTextTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            RemoveText();
+            var textbox = sender as TextBox;
+            if (textbox == null) return;
+            if (textbox.Text == "Enter text here...")
+            {
+                RemoveText();
+            }
         }
 
         private void searchTextTextBox_LostFocus(object sender, RoutedEventArgs e)

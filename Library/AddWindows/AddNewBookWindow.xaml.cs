@@ -26,6 +26,7 @@ namespace Library.AddWindows
         private readonly int _editedBookId;
         private readonly OperationType _operationType;
 
+
         private readonly double marginTopValue = 5;
 
         public AddNewBookWindow(IUnitOfWork unit, BooksDisplayViewModel booksDisplayViewModel)
@@ -280,7 +281,7 @@ namespace Library.AddWindows
             var removeButton = new Button
             {
                 Height = 20,
-                Content = "Забрати",
+                Content = "Remove",
                 Margin = new Thickness(0, marginTopValue, 0, 0)
             };
             removeButton.Click += removeButton_Click;
@@ -311,6 +312,11 @@ namespace Library.AddWindows
             var margin = control.Margin;
             margin.Top += valueToMove;
             control.Margin = margin;
+        }
+
+        private void managementButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
