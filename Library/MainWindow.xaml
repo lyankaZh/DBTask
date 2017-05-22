@@ -1,0 +1,38 @@
+﻿<Window x:Class="Library.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library"
+        mc:Ignorable="d"
+        Title="Library" Height="531.908" Width="904.934" Icon="library.ico">
+    <Window.Background>
+        <ImageBrush ImageSource="background.jpg"/>
+    </Window.Background>
+
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="881*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="booksButton" Content="Books" Grid.Column="1" HorizontalAlignment="Left" Margin="148,154,0,0" VerticalAlignment="Top" Width="206" Height="45" FontFamily="Bookman Old Style" FontSize="20" FontWeight="Bold" FontStyle="Italic" RenderTransformOrigin="1,0" Click="booksButton_Click">
+            <Button.Background>
+                <SolidColorBrush Color="#FFF5C277" Opacity="0.5"/>
+            </Button.Background>
+
+        </Button>
+        <Button x:Name="readersButton" Content="Readers" Grid.Column="1" HorizontalAlignment="Left" Margin="148,235,0,0" VerticalAlignment="Top" Width="206" Height="45" FontFamily="Bookman Old Style" FontSize="20" FontWeight="Bold" FontStyle="Italic" RenderTransformOrigin="1,0" Click="readersButton_Click">
+            <Button.Background>
+                <SolidColorBrush Color="#FFF5C277" Opacity="0.5"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="borrowButton" Content="Borrow" Grid.Column="1" HorizontalAlignment="Left" Margin="148,318,0,0" VerticalAlignment="Top" Width="206" Height="45" FontFamily="Bookman Old Style" FontSize="20" FontWeight="Bold" FontStyle="Italic" RenderTransformOrigin="1,0" Click="borrowButton_Click">
+            <Button.Background>
+                <SolidColorBrush Color="#FFF5C277" Opacity="0.5"/>
+            </Button.Background>
+        </Button>
+
+    </Grid>
+</Window>

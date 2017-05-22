@@ -1,0 +1,4 @@
+E:\Універ\Library\DBTask\Database\bin\Debug\Database.dll
+E:\Універ\Library\DBTask\Database\bin\Debug\Database.pdb
+E:\Універ\Library\DBTask\Database\obj\Debug\Database.dll
+E:\Універ\Library\DBTask\Database\obj\Debug\Database.pdb

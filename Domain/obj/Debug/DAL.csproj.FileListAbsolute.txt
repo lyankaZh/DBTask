@@ -1,0 +1,20 @@
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\bin\Debug\Domain.dll.config
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\bin\Debug\Domain.dll
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\bin\Debug\Domain.pdb
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\bin\Debug\EntityFramework.dll
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\bin\Debug\EntityFramework.SqlServer.dll
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\bin\Debug\EntityFramework.xml
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\bin\Debug\EntityFramework.SqlServer.xml
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\obj\Debug\Domain.dll
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\obj\Debug\Domain.pdb
+E:\EPAM\Individual project\LibrarySystem\Library\Domain\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+E:\Універ\Library\DBTask\Domain\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+E:\Універ\Library\DBTask\Domain\bin\Debug\Domain.dll.config
+E:\Універ\Library\DBTask\Domain\bin\Debug\Domain.dll
+E:\Універ\Library\DBTask\Domain\bin\Debug\Domain.pdb
+E:\Універ\Library\DBTask\Domain\bin\Debug\EntityFramework.dll
+E:\Універ\Library\DBTask\Domain\bin\Debug\EntityFramework.SqlServer.dll
+E:\Універ\Library\DBTask\Domain\bin\Debug\EntityFramework.xml
+E:\Універ\Library\DBTask\Domain\bin\Debug\EntityFramework.SqlServer.xml
+E:\Універ\Library\DBTask\Domain\obj\Debug\Domain.dll
+E:\Універ\Library\DBTask\Domain\obj\Debug\Domain.pdb
