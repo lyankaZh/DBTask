@@ -45,7 +45,8 @@ namespace Library.MainWindows
         private void addBookButton_Click(object sender, RoutedEventArgs e)
         {
             var bookCreatingWindow = new AddNewBookWindow(_unitOfWork, _booksDisplayViewModel);
-            bookCreatingWindow.ShowDialog();
+            bookCreatingWindow.Show();
+            Close();
         }
 
         private void editCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -161,10 +162,12 @@ namespace Library.MainWindows
                                         || author.LastName.ToLower().Contains(searchTextTextBox.Text.ToLower()))
                                     {
                                         authorsList.Add(book);
+                                        break;
                                     }
                                     else if (author.MiddleName?.ToLower().Contains(searchTextTextBox.Text.ToLower()) == true)
                                     {
                                         authorsList.Add(book);
+                                        break;
                                     }
                                 }
                             }

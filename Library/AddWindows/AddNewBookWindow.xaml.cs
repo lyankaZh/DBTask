@@ -8,6 +8,7 @@ using System.Windows.Data;
 using Domain.Models;
 using Domain.Repository;
 using Library.Helpers;
+using Library.MainWindows;
 using Library.ViewModels;
 
 namespace Library.AddWindows
@@ -130,6 +131,8 @@ namespace Library.AddWindows
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
+            BooksWindow booksWindow = new BooksWindow(_unitOfWork);
+            booksWindow.Show();
             Close();
         }
 
@@ -177,6 +180,12 @@ namespace Library.AddWindows
                         authors.Add(author);
                     }
 
+                    if (authors.Count != authors.Distinct().Count())
+                    {
+                        MessageBox.Show("There can't be same authors on one book");
+                        return;
+                    }
+
                     var book = new Book
                     {
                         Name = name,
@@ -202,6 +211,9 @@ namespace Library.AddWindows
                     _booksDisplayViewModel.Books =
                         new ObservableCollection<BookModel>(
                             _unitOfWork.BookRepository.Get().ToList().ToBookModelsList(_unitOfWork));
+
+                    BooksWindow booksWindow = new BooksWindow(_unitOfWork);
+                    booksWindow.Show();
                     Close();
 
                 }

@@ -60,7 +60,7 @@ namespace Library
 
         private void deleteAuthorCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation",
+            var messageBoxResult = MessageBox.Show("Are you sure? All books of this author will be deleted", "Delete Confirmation",
                 MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -68,6 +68,21 @@ namespace Library
                 if (author != null)
                 {
                     var authorToDelete = _unitOfWork.AuthorRepository.GetById(author.AuthorId);
+                    foreach (var book in _unitOfWork.BookRepository.Get())
+                    {
+                        if (book.Authors.Contains(author))
+                        {
+                            if (book.Authors.Count == 1)
+                            {
+                                _unitOfWork.BookRepository.Delete(book);
+                            }
+                            else
+                            {
+                                book.Authors.Remove(author);
+                                _unitOfWork.BookRepository.Update(book);
+                            }
+                        }
+                    }
                     _unitOfWork.AuthorRepository.Delete(authorToDelete);
                     _unitOfWork.Save();
                     viewModel.Authors =
@@ -92,6 +107,7 @@ namespace Library
             {
                 var genreCreatingWindow = new AddNewGenreWindow(_unitOfWork, viewModel, genre);
                 genreCreatingWindow.ShowDialog();
+                
             }
         }
 
@@ -106,7 +122,7 @@ namespace Library
 
         private void deleteGenreCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation",
+            var messageBoxResult = MessageBox.Show("Are you sure? All books of this genres will be deleted!", "Delete Confirmation",
                 MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
@@ -114,6 +130,14 @@ namespace Library
                 if (genre != null)
                 {
                     var genreToDelete = _unitOfWork.GenreRepository.GetById(genre.GenreId);
+                    foreach (var book in _unitOfWork.BookRepository.Get())
+                    {
+                        if (book.Genre == genreToDelete)
+                        {
+                            _unitOfWork.BookRepository.Delete(book);
+                        }
+                    }
+
                     _unitOfWork.GenreRepository.Delete(genreToDelete);
                     _unitOfWork.Save();
                     viewModel.Genres =
