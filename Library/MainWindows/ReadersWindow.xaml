@@ -28,7 +28,7 @@
             <TextBox x:Name="searchTextTextBox" Height="37" Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="Enter text here..." GotFocus="searchTextTextBox_GotFocus" LostFocus="searchTextTextBox_LostFocus"/>
             <Button x:Name="searchButton" Content="Search" Height="37" VerticalAlignment="Top" Width="59" Click="searchButton_Click"/>
         </ToolBar>
-        <DataGrid x:Name="readersTable" Margin="16,55,29,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding Readers}" IsReadOnly="True" CanUserReorderColumns="False">
+        <DataGrid x:Name="readersTable" Margin="16,55,29,0" VerticalAlignment="Top" AutoGenerateColumns="False" ItemsSource="{Binding Readers}" IsReadOnly="True" CanUserReorderColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding ReaderId}" />
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />

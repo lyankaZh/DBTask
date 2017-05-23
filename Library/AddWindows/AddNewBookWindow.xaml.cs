@@ -243,8 +243,8 @@ namespace Library.AddWindows
 
         private void addAuthor_Click(object sender, RoutedEventArgs e)
         {
-            var addNewAuthorWindow = new AddNewAuthorWindow(_creatingBookViewModel);
-            addNewAuthorWindow.ShowDialog();
+            //var addNewAuthorWindow = new AddNewAuthorWindow(_creatingBookViewModel);
+            //addNewAuthorWindow.ShowDialog();
         }
 
         private void oneMoreAuthor_Click(object sender, RoutedEventArgs e)

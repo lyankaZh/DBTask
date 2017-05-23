@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="ManagementWindow" Height="345.745" Width="514.894">
+        Title="ManagementWindow" Height="345.745" Width="514.894" Icon="library.ico">
     <Window.Resources>
         <RoutedUICommand x:Key="EditAuthor" Text="Edit author" />
         <RoutedUICommand x:Key="DeleteAuthor" Text="Delete author" />
@@ -29,20 +29,24 @@
     <Grid>
 
 
-        <TabControl x:Name="managementTabControl" Margin="10,46,25,0" VerticalAlignment="Top" Height="246" ItemsSource="{Binding BorrowInfo}">
+        <TabControl x:Name="managementTabControl" Margin="10,10,25,0" VerticalAlignment="Top" Height="Auto" ItemsSource="{Binding BorrowInfo}">
 
             <TabItem Header="Authors">
                 <Grid>
                     <ToolBar x:Name="authorsToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
-                        <Button x:Name="addAuthorButton" Content="Add Author" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
-                        <Button x:Name="editAuthorButton" Command ="{StaticResource EditAuthor}" Content="Edit Author" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
-                        <Button x:Name="deleteAuthorButton" Command ="{StaticResource DeleteAuthor}" Content="Delete Author" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                        <Button x:Name="addAuthorButton" Content="Add Author" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" Click="AddAuthorButton_OnClick"/>
+                        <Button x:Name="editAuthorButton" Command ="{StaticResource EditAuthor}" Content="Edit Author" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" />
+                        <Button x:Name="deleteAuthorButton" Command ="{StaticResource DeleteAuthor}" Content="Delete Author" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5"/>
                     </ToolBar>
-                    <DataGrid x:Name="authorsTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                    <DataGrid x:Name="authorsTable" Margin="16,55,10,0" 
+                              VerticalAlignment="Top" 
+                              AutoGenerateColumns="False" ItemsSource="{Binding Authors}" 
+                              IsReadOnly="True" CanUserReorderColumns="False"
+                              Background="White" FontFamily="Bookman Old Style">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
-                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
-                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
+                            <DataGridTextColumn Header="Middle Name" Binding="{Binding MiddleName}" Width="*"/>
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

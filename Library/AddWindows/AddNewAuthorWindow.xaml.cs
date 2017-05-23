@@ -9,13 +9,37 @@ namespace Library.AddWindows
 {
     public partial class AddNewAuthorWindow : Window
     {
-        UnitOfWork unitOfWork = new UnitOfWork();
+        IUnitOfWork _unitOfWork;
         private CreatingBookViewModel viewModel;
+        private OperationType operationType;
+        private int editAuthorId;
 
-        public AddNewAuthorWindow( CreatingBookViewModel model)
+        public AddNewAuthorWindow(IUnitOfWork unitOfWork, CreatingBookViewModel model)
         {
             InitializeComponent();
+            _unitOfWork = unitOfWork;
             viewModel = model;
+            operationType = OperationType.Create;
+        }
+
+        public AddNewAuthorWindow(IUnitOfWork unitOfWork, CreatingBookViewModel model, Author author)
+        {
+            InitializeComponent();
+            _unitOfWork = unitOfWork;
+            viewModel = model;
+            operationType = OperationType.Edit;
+            editAuthorId = author.AuthorId;
+            SetTextOnEditFields(author);
+        }
+
+        private void SetTextOnEditFields(Author author)
+        {
+            nameTextBox.Text = author.FirstName;
+            surnameTextBox.Text = author.LastName;
+            if (author.MiddleName != null)
+            {
+                middleNameTextBox.Text = author.MiddleName;
+            }
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -27,7 +51,8 @@ namespace Library.AddWindows
         {
             if (!string.IsNullOrEmpty(surnameTextBox.Text) && !string.IsNullOrEmpty(nameTextBox.Text))
             {
-                var author =new Author
+               
+                    var author =new Author
                 {
                     FirstName = nameTextBox.Text,
                     LastName = surnameTextBox.Text
@@ -36,15 +61,36 @@ namespace Library.AddWindows
                 {
                     author.MiddleName = middleNameTextBox.Text;
                 }
-                unitOfWork.AuthorRepository.Insert(author);
-                unitOfWork.Save();
+                if (operationType == OperationType.Create)
+                {
+                    if (_unitOfWork.AuthorRepository.Get(x => x.FirstName == nameTextBox.Text
+                                                         && x.LastName == surnameTextBox.Text &&
+                                                         x.MiddleName == middleNameTextBox.Text).Any())
+                    {
+                        MessageBox.Show("Such author already exists");
+                        return;
+                    }
+                    _unitOfWork.AuthorRepository.Insert(author);
+                }
+                else if (operationType == OperationType.Edit)
+                {
+                    var authorToEdit = _unitOfWork.AuthorRepository.GetById(editAuthorId);
+                    authorToEdit.FirstName = author.FirstName;
+                    authorToEdit.LastName = author.LastName;
+                    if (authorToEdit.MiddleName != null)
+                    {
+                        authorToEdit.MiddleName = author.MiddleName;
+                    }
+                }
+                
+                _unitOfWork.Save();
 
-                viewModel.Authors = new ObservableCollection<Author>(unitOfWork.AuthorRepository.Get().ToList());
+                viewModel.Authors = new ObservableCollection<Author>(_unitOfWork.AuthorRepository.Get().ToList());
                 Close();
             }
             else
             {
-                MessageBox.Show("Вкажіть ім'я та прізвище автора");
+                MessageBox.Show("Input correct author");
             }
         }
     }

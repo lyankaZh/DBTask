@@ -96,6 +96,7 @@
     <Compile Include="ViewModels\BooksDisplayViewModel.cs" />
     <Compile Include="ViewModels\BorrowDisplayViewModel.cs" />
     <Compile Include="ViewModels\CreatingBookViewModel.cs" />
+    <Compile Include="ViewModels\DisplayViewModel.cs" />
     <Compile Include="ViewModels\ReadersDisplayViewModel.cs" />
     <Page Include="AddWindows\AddNewAuthorWindow.xaml">
       <SubType>Designer</SubType>
