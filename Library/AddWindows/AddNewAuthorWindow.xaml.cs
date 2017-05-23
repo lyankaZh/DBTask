@@ -75,12 +75,16 @@ namespace Library.AddWindows
                 else if (operationType == OperationType.Edit)
                 {
                     var authorToEdit = _unitOfWork.AuthorRepository.GetById(editAuthorId);
-                    authorToEdit.FirstName = author.FirstName;
-                    authorToEdit.LastName = author.LastName;
-                    if (authorToEdit.MiddleName != null)
+                    if (authorToEdit != null)
                     {
-                        authorToEdit.MiddleName = author.MiddleName;
+                        authorToEdit.FirstName = author.FirstName;
+                        authorToEdit.LastName = author.LastName;
+                        if (authorToEdit.MiddleName != null)
+                        {
+                            authorToEdit.MiddleName = author.MiddleName;
+                        }
                     }
+                    
                 }
                 
                 _unitOfWork.Save();

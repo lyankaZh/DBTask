@@ -6,7 +6,7 @@ namespace Domain.Models
 {
     public class LibraryDbContext: DbContext
     {
-        public LibraryDbContext() : base("DBBBB")
+        public LibraryDbContext() : base("DBBBB2")
         {
             Database.SetInitializer(new LibraryDbInitializer());
         }

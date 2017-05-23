@@ -29,7 +29,7 @@
     <Grid>
 
 
-        <TabControl x:Name="managementTabControl" Margin="10,10,25,0" VerticalAlignment="Top" Height="Auto" ItemsSource="{Binding BorrowInfo}">
+        <TabControl x:Name="managementTabControl" Margin="10,37,25,0" VerticalAlignment="Top" Height="Auto" ItemsSource="{Binding BorrowInfo}">
 
             <TabItem Header="Authors">
                 <Grid>
@@ -55,15 +55,18 @@
             <TabItem Header="Genres">
                 <Grid>
                     <ToolBar x:Name="genresToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
-                        <Button x:Name="addGenreButton" Content="Add Genre" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
-                        <Button x:Name="editGenreButton" Command ="{StaticResource EditGenre}" Content="Edit Genre" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
-                        <Button x:Name="deleteGenreButton" Command ="{StaticResource DeleteGenre}" Content="Delete Genre" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                        <Button x:Name="addGenreButton" Content="Add Genre" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" Click="AddGenreButton_OnClick"/>
+                        <Button x:Name="editGenreButton" Command ="{StaticResource EditGenre}" Content="Edit Genre" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" />
+                        <Button x:Name="deleteGenreButton" Command ="{StaticResource DeleteGenre}" Content="Delete Genre" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5"/>
                     </ToolBar>
-                    <DataGrid x:Name="genresTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                    <DataGrid x:Name="genresTable" Margin="16,55,10,0" 
+                              VerticalAlignment="Top" 
+                              AutoGenerateColumns="False" 
+                              ItemsSource="{Binding Genres}" 
+                              IsReadOnly="True" CanUserReorderColumns="False"
+                              Background="White" FontFamily="Bookman Old Style">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
-                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
-                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                            <DataGridTextColumn Header="Genre" Binding="{Binding GenreName}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -105,5 +108,6 @@
 
 
         </TabControl>
+        <Button x:Name="backButton" Content="&lt;-Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="backButton_Click"/>
     </Grid>
 </Window>

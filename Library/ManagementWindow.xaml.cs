@@ -13,12 +13,20 @@ namespace Library
     {
         IUnitOfWork _unitOfWork;
         private CreatingBookViewModel viewModel;
-        public ManagementWindow(IUnitOfWork unitOfWork)
+        private Book bookFromPreviousWindow;
+        private BooksDisplayViewModel _booksDisplayViewModelToRemember;
+        private OperationType _operationTypeToRemember;
+
+        public ManagementWindow(IUnitOfWork unitOfWork, Book book, 
+            BooksDisplayViewModel booksDisplayViewModelToRemember, OperationType operation)
         {
             InitializeComponent();
             _unitOfWork = unitOfWork;
             viewModel = new CreatingBookViewModel(_unitOfWork);
             DataContext = viewModel;
+            bookFromPreviousWindow = book;
+            _booksDisplayViewModelToRemember = booksDisplayViewModelToRemember;
+            _operationTypeToRemember = operation;
         }
 
 
@@ -70,35 +78,49 @@ namespace Library
 
         private void editGenreCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //    if (booksTable != null)
-            //    {
-            //        var selectedItem = booksTable.SelectedItem;
-            //        e.CanExecute = selectedItem != null;
-            //    }
+            if (genresTable != null)
+            {
+                var selectedItem = genresTable.SelectedItem;
+                e.CanExecute = selectedItem != null;
+            }
         }
 
         private void editGenreCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //EditBook();
+            var genre = genresTable.SelectedItem as Genre;
+            if (genre != null)
+            {
+                var genreCreatingWindow = new AddNewGenreWindow(_unitOfWork, viewModel, genre);
+                genreCreatingWindow.ShowDialog();
+            }
         }
 
         private void deleteGenreCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //if (booksTable != null)
-            //{
-            //    var selectedItem = booksTable.SelectedItem;
-            //    e.CanExecute = selectedItem != null;
-            //}
+            if (genresTable != null)
+            {
+                var selectedItem = genresTable.SelectedItem;
+                e.CanExecute = selectedItem != null;
+            }
         }
 
         private void deleteGenreCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //var messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation",
-            //    MessageBoxButton.YesNo);
-            //if (messageBoxResult == MessageBoxResult.Yes)
-            //{
-            //    DeleteBook();
-            //}
+            var messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation",
+                MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                var genre = genresTable.SelectedItem as Genre;
+                if (genre != null)
+                {
+                    var genreToDelete = _unitOfWork.GenreRepository.GetById(genre.GenreId);
+                    _unitOfWork.GenreRepository.Delete(genreToDelete);
+                    _unitOfWork.Save();
+                    viewModel.Genres =
+                        new ObservableCollection<Genre>(_unitOfWork.GenreRepository.Get().ToList());
+                    
+                }
+            }
         }
 
         private void editLanguageCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -171,6 +193,22 @@ namespace Library
         {
             AddNewAuthorWindow addNewAuthorWindow = new AddNewAuthorWindow(_unitOfWork, viewModel);
             addNewAuthorWindow.ShowDialog();
+        }
+
+        private void AddGenreButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AddNewGenreWindow addNewGenreWindow = new AddNewGenreWindow(
+                _unitOfWork, viewModel);
+            addNewGenreWindow.ShowDialog();
+
+        }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewBookWindow addNewBookWindow =  new AddNewBookWindow(_unitOfWork, _booksDisplayViewModelToRemember, 
+                bookFromPreviousWindow, _operationTypeToRemember);
+            addNewBookWindow.Show();
+            Close();
         }
     }
 }

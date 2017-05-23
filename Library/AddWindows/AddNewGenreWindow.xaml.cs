@@ -11,12 +11,25 @@ namespace Library.AddWindows
     {
         readonly IUnitOfWork _unitOfWork;
         private readonly CreatingBookViewModel _creatingBookView;
+        private OperationType operationType;
+        private int editedGenreIndex;
 
-        public AddNewGenreWindow(CreatingBookViewModel viewModel, IUnitOfWork unitOfWork)
+        public AddNewGenreWindow(IUnitOfWork unitOfWork,CreatingBookViewModel viewModel)
         {
             InitializeComponent();
             _creatingBookView = viewModel;
             _unitOfWork = unitOfWork;
+            operationType = OperationType.Create;
+        }
+
+        public AddNewGenreWindow(IUnitOfWork unitOfWork, CreatingBookViewModel viewModel,Genre genre)
+        {
+            InitializeComponent();
+            _creatingBookView = viewModel;
+            _unitOfWork = unitOfWork;
+            editedGenreIndex = genre.GenreId;
+            genreTextBox.Text = genre.GenreName;
+            operationType = OperationType.Edit;
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -33,12 +46,24 @@ namespace Library.AddWindows
                     .FirstOrDefault(x => x.GenreName == genreTextBox.Text);
                 if (genre == null)
                 {
-                    _unitOfWork.GenreRepository.Insert(
-                        new Genre
+                    if (operationType == OperationType.Create)
                     {
-                       GenreName = genreTextBox.Text
-                    });
-                       
+                        _unitOfWork.GenreRepository.Insert(
+                            new Genre
+                            {
+                                GenreName = genreTextBox.Text
+                            });
+                    }
+                    else if (operationType == OperationType.Edit)
+                    {
+                        var genreToEdit = _unitOfWork.GenreRepository.GetById(editedGenreIndex);
+                        if (genreToEdit != null)
+                        {
+                            genreToEdit.GenreName = genreTextBox.Text;
+                            _unitOfWork.GenreRepository.Update(genreToEdit);
+                        }
+                    }
+
                     _unitOfWork.Save();
                     _creatingBookView.Genres = new ObservableCollection<Genre>(_unitOfWork.GenreRepository.Get().ToList());
                     Close();

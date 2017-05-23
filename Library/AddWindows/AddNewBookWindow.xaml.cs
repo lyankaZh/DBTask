@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -28,6 +29,63 @@ namespace Library.AddWindows
 
 
         private readonly double marginTopValue = 5;
+
+        public AddNewBookWindow(IUnitOfWork unit, BooksDisplayViewModel booksDisplayViewModel, Book book, OperationType operation)
+        {
+            InitializeComponent();
+            _unitOfWork = unit;
+            _creatingBookViewModel = new CreatingBookViewModel(_unitOfWork);
+            _booksDisplayViewModel = booksDisplayViewModel;
+            DataContext = _creatingBookViewModel;
+            _operationType = operation;
+            if (book.Genre != null)
+            {
+                genreComboBox.SelectedValue = book.Genre;
+            }
+            if (book.Name != null)
+            {
+                nameTextBox.Text = book.Name;
+            }
+            if (book.Year != 0)
+            {
+                yearTextBox.Text = book.Year.ToString();
+            }
+            if (book.Pages != 0)
+            {
+                pagesTextBox.Text = book.Pages.ToString();
+            }
+            if (book.Language != null)
+            {
+                languageComboBox.SelectedValue = book.Language;
+            }
+            if (book.Location != null)
+            {
+                locationTextBox.Text = book.Location;
+            }
+            if (book.Publisher != null)
+            {
+                publisherComboBox.SelectedValue = book.Publisher;
+            }
+
+            if(book.Authors != null)
+            {
+                if (book.Authors[0] != null)
+                {
+                    authorComboBox.SelectedValue = book.Authors[0].AuthorId;
+                }
+                
+                for (var i = 1; i < book.Authors.Count; i++)
+                {
+                    if (book.Authors[i] != null)
+                    {
+                        CreateNewComboBox().SelectedValue = book.Authors[i].AuthorId;
+                    }
+                }
+            }
+            
+
+           
+        }
 
         public AddNewBookWindow(IUnitOfWork unit, BooksDisplayViewModel booksDisplayViewModel)
         {
@@ -61,7 +119,7 @@ namespace Library.AddWindows
             genreComboBox.SelectedValue = bookModel.Genre;
             languageComboBox.SelectedValue = bookModel.Language;
             publisherComboBox.SelectedValue = bookModel.Publisher;
-           
+
             authorComboBox.SelectedValue = bookModel.Authors.Authors[0].AuthorId;
 
             for (var i = 1; i < bookModel.Authors.Authors.Count; i++)
@@ -160,7 +218,7 @@ namespace Library.AddWindows
 
 
         public void AddBook(Book book, List<Author> authors)
-        {   
+        {
             _unitOfWork.BookRepository.Insert(book);
 
             foreach (var a in authors)
@@ -168,7 +226,7 @@ namespace Library.AddWindows
                 a.Books.Add(book);
                 _unitOfWork.AuthorRepository.Update(a);
             }
-          
+
         }
 
         public void EditBook(Book newBook)
@@ -223,11 +281,7 @@ namespace Library.AddWindows
             return true;
         }
 
-        private void addGenreButton_Click(object sender, RoutedEventArgs e)
-        {
-            var addNewGenreWindow = new AddNewGenreWindow(_creatingBookViewModel, _unitOfWork);
-            addNewGenreWindow.ShowDialog();
-        }
+
 
         private void addPublisherButton_Click(object sender, RoutedEventArgs e)
         {
@@ -316,8 +370,46 @@ namespace Library.AddWindows
 
         private void managementButton_Click(object sender, RoutedEventArgs e)
         {
-            ManagementWindow managementWindow = new ManagementWindow(_unitOfWork);
-            managementWindow.ShowDialog();
+            var book = new Book()
+            {
+                Genre = (Genre) genreComboBox.SelectedItem,
+                Language = (Language) languageComboBox.SelectedItem,
+                Publisher = (Publisher) publisherComboBox.SelectedItem,
+                Name = nameTextBox.Text,
+                Location = locationTextBox.Text
+
+            };
+            try
+            {
+                int pages = int.Parse(pagesTextBox.Text);
+                book.Pages = pages;
+            }
+            catch (Exception exception)
+            {
+                book.Pages = 0;
+            }
+            try
+            {
+                int year = int.Parse(yearTextBox.Text);
+                book.Year = year;
+            }
+            catch (Exception exception)
+            {
+                book.Year = 0;
+            }
+                
+                
+            var authors = new List<Author>();
+            foreach (ComboBox control in stackPanel.Children)
+            {
+                var author = (Author) control.SelectedItem;
+                authors.Add(author);
+            }
+            book.Authors = authors;
+            ManagementWindow managementWindow = new ManagementWindow(_unitOfWork, book, _booksDisplayViewModel, _operationType);
+            managementWindow.Show();
+            Close();
         }
     }
 }
+

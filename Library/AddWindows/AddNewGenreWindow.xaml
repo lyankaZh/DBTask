@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Library"
         mc:Ignorable="d"
-        Title="Add genre" Height="142.599" Width="282.558" ResizeMode="NoResize">
+        Title="Add genre" Height="142.599" Width="282.558" ResizeMode="NoResize" Icon="/Library;component/library.ico">
     <Grid>
         <Label x:Name="label" Content="Genre" HorizontalAlignment="Left" Margin="47,21,0,0" VerticalAlignment="Top" Width="56"/>
         <TextBox x:Name="genreTextBox" HorizontalAlignment="Left" Height="23" Margin="118,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
