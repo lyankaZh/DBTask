@@ -128,3 +128,5 @@ E:\Універ\Library\DBTask\Library\obj\Debug\Library.Properties.Resources.re
 E:\Універ\Library\DBTask\Library\obj\Debug\Library.csproj.GenerateResource.Cache
 E:\Універ\Library\DBTask\Library\obj\Debug\Library.exe
 E:\Універ\Library\DBTask\Library\obj\Debug\Library.pdb
+E:\Універ\Library\DBTask\Library\obj\Debug\ManagementWindow.g.cs
+E:\Універ\Library\DBTask\Library\obj\Debug\ManagementWindow.baml

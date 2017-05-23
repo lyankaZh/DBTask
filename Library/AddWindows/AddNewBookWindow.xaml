@@ -18,7 +18,6 @@
         <TextBox x:Name="yearTextBox" HorizontalAlignment="Left" Margin="355,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105" TabIndex="1"/>
         <TextBox x:Name="pagesTextBox" HorizontalAlignment="Left" Margin="135,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="105" TabIndex="2"/>
         <ComboBox x:Name="genreComboBox" IsEditable="True" HorizontalAlignment="Left" Margin="132,88,0,0" VerticalAlignment="Top" Width="105" ItemsSource="{Binding Genres}" SelectedValuePath="GenreName" TabIndex="4"/>
-        <!--SelectedItem="{Binding LanguageId}" DisplayMemberPath="{Binding LanguageName}"-->
         <ComboBox x:Name="languageComboBox" IsEditable="True" HorizontalAlignment="Left" Margin="132,115,0,0" VerticalAlignment="Top" Width="105" ItemsSource="{Binding Languages}" SelectedValuePath="LanguageName" TabIndex="5"/>
         <ComboBox x:Name="publisherComboBox" IsEditable="True" HorizontalAlignment="Left" Margin="132,142,0,0" VerticalAlignment="Top" Width="105" ItemsSource="{Binding Publishers}" SelectedValuePath="PublisherName" TabIndex="6"/>
         <Label x:Name="authotsLabel"  Content="Authors" HorizontalAlignment="Left" Margin="21,171,0,0" VerticalAlignment="Top" Width="90"/>

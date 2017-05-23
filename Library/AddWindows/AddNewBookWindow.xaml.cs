@@ -316,7 +316,8 @@ namespace Library.AddWindows
 
         private void managementButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ManagementWindow managementWindow = new ManagementWindow(_unitOfWork);
+            managementWindow.ShowDialog();
         }
     }
 }

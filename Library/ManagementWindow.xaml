@@ -1,0 +1,105 @@
+﻿<Window x:Class="Library.ManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Library"
+        mc:Ignorable="d"
+        Title="ManagementWindow" Height="345.745" Width="514.894">
+    <Window.Resources>
+        <RoutedUICommand x:Key="EditAuthor" Text="Edit author" />
+        <RoutedUICommand x:Key="DeleteAuthor" Text="Delete author" />
+        <RoutedUICommand x:Key="EditGenre" Text="Edit genre" />
+        <RoutedUICommand x:Key="DeleteGenre" Text="Delete genre" />
+        <RoutedUICommand x:Key="EditLanguage" Text="Edit language" />
+        <RoutedUICommand x:Key="DeleteLanguage" Text="Delete language" />
+        <RoutedUICommand x:Key="EditPublisher" Text="Edit publisher" />
+        <RoutedUICommand x:Key="DeletePublisher" Text="Delete publisher" />
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource EditAuthor}" CanExecute="editAuthorCommand_CanExecute" Executed="editAuthorCommand_Executed" />
+        <CommandBinding Command="{StaticResource DeleteAuthor}" CanExecute="deleteAuthorCommand_CanExecute" Executed="deleteAuthorCommand_Executed" />
+        <CommandBinding Command="{StaticResource EditGenre}" CanExecute="editGenreCommand_CanExecute" Executed="editGenreCommand_Executed" />
+        <CommandBinding Command="{StaticResource DeleteGenre}" CanExecute="deleteGenreCommand_CanExecute" Executed="deleteGenreCommand_Executed" />
+        <CommandBinding Command="{StaticResource EditLanguage}" CanExecute="editLanguageCommand_CanExecute" Executed="editLanguageCommand_Executed" />
+        <CommandBinding Command="{StaticResource DeleteLanguage}" CanExecute="deleteLanguageCommand_CanExecute" Executed="deleteLanguageCommand_Executed" />
+        <CommandBinding Command="{StaticResource EditPublisher}" CanExecute="editPublisherCommand_CanExecute" Executed="editPublisherCommand_Executed" />
+        <CommandBinding Command="{StaticResource DeletePublisher}" CanExecute="deletePublisherCommand_CanExecute" Executed="deletePublisherCommand_Executed" />
+    </Window.CommandBindings>
+    <Grid>
+
+
+        <TabControl x:Name="managementTabControl" Margin="10,46,25,0" VerticalAlignment="Top" Height="246" ItemsSource="{Binding BorrowInfo}">
+
+            <TabItem Header="Authors">
+                <Grid>
+                    <ToolBar x:Name="authorsToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
+                        <Button x:Name="addAuthorButton" Content="Add Author" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
+                        <Button x:Name="editAuthorButton" Command ="{StaticResource EditAuthor}" Content="Edit Author" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
+                        <Button x:Name="deleteAuthorButton" Command ="{StaticResource DeleteAuthor}" Content="Delete Author" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                    </ToolBar>
+                    <DataGrid x:Name="authorsTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
+                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Genres">
+                <Grid>
+                    <ToolBar x:Name="genresToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
+                        <Button x:Name="addGenreButton" Content="Add Genre" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
+                        <Button x:Name="editGenreButton" Command ="{StaticResource EditGenre}" Content="Edit Genre" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
+                        <Button x:Name="deleteGenreButton" Command ="{StaticResource DeleteGenre}" Content="Delete Genre" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                    </ToolBar>
+                    <DataGrid x:Name="genresTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
+                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Languages">
+                <Grid>
+                    <ToolBar x:Name="languagesToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
+                        <Button x:Name="addLanguageButton" Content="Add Language" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
+                        <Button x:Name="editLanguageButton" Command ="{StaticResource EditLanguage}" Content="Edit Language" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
+                        <Button x:Name="deleteLanguageButton" Command ="{StaticResource DeleteLanguage}" Content="Delete Language" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                    </ToolBar>
+                    <DataGrid x:Name="languagesTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
+                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Publishers">
+                <Grid>
+                    <ToolBar x:Name="publishersToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
+                        <Button x:Name="addPublisherButton" Content="Add Publisher" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
+                        <Button x:Name="editPublisherButton" Command ="{StaticResource EditPublisher}" Content="Edit Publisher" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
+                        <Button x:Name="deletePublisherButton" Command ="{StaticResource DeletePublisher}" Content="Delete Publisher" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                    </ToolBar>
+                    <DataGrid x:Name="publishersTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
+                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+
+        </TabControl>
+    </Grid>
+</Window>
