@@ -295,24 +295,7 @@ namespace Library.AddWindows
 
 
 
-        private void addPublisherButton_Click(object sender, RoutedEventArgs e)
-        {
-            var addNewGenreWindow = new AddNewPublisherWindow(_creatingBookViewModel, _unitOfWork);
-            addNewGenreWindow.ShowDialog();
-        }
-
-        private void addLanguageButton_Click(object sender, RoutedEventArgs e)
-        {
-            var addNewLanguageWindow = new AddNewLanguageWindow(_creatingBookViewModel, _unitOfWork);
-            addNewLanguageWindow.ShowDialog();
-        }
-
-        private void addAuthor_Click(object sender, RoutedEventArgs e)
-        {
-            //var addNewAuthorWindow = new AddNewAuthorWindow(_creatingBookViewModel);
-            //addNewAuthorWindow.ShowDialog();
-        }
-
+        
         private void oneMoreAuthor_Click(object sender, RoutedEventArgs e)
         {
             CreateNewComboBox();

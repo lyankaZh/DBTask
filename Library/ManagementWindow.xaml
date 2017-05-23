@@ -75,15 +75,18 @@
             <TabItem Header="Languages">
                 <Grid>
                     <ToolBar x:Name="languagesToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
-                        <Button x:Name="addLanguageButton" Content="Add Language" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
-                        <Button x:Name="editLanguageButton" Command ="{StaticResource EditLanguage}" Content="Edit Language" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
-                        <Button x:Name="deleteLanguageButton" Command ="{StaticResource DeleteLanguage}" Content="Delete Language" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                        <Button x:Name="addLanguageButton" Content="Add Language" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" Click="AddLanguageButton_OnClick"/>
+                        <Button x:Name="editLanguageButton" Command ="{StaticResource EditLanguage}" Content="Edit Language" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" />
+                        <Button x:Name="deleteLanguageButton" Command ="{StaticResource DeleteLanguage}" Content="Delete Language" Height="50" VerticalAlignment="Top" Width="100" Margin="0,0,0,-5"/>
                     </ToolBar>
-                    <DataGrid x:Name="languagesTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                    <DataGrid x:Name="languagesTable" Margin="16,55,10,0"
+                              VerticalAlignment="Top" 
+                              AutoGenerateColumns="False" 
+                              ItemsSource="{Binding Languages}" 
+                              IsReadOnly="True" CanUserReorderColumns="False"
+                              Background="White" FontFamily="Bookman Old Style">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
-                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
-                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                            <DataGridTextColumn Header="Language" Binding="{Binding LanguageName}" Width ="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -92,15 +95,20 @@
             <TabItem Header="Publishers">
                 <Grid>
                     <ToolBar x:Name="publishersToolBar" VerticalAlignment="Top" Height="42" Margin="0,0,18,0">
-                        <Button x:Name="addPublisherButton" Content="Add Publisher" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5" />
-                        <Button x:Name="editPublisherButton" Command ="{StaticResource EditPublisher}" Content="Edit Publisher" Height="50" VerticalAlignment="Top" Width="44" Margin="0,0,0,-5" />
-                        <Button x:Name="deletePublisherButton" Command ="{StaticResource DeletePublisher}" Content="Delete Publisher" Height="50" VerticalAlignment="Top" Width="75" Margin="0,0,0,-5"/>
+                        <Button x:Name="addPublisherButton" Content="Add Publisher" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" Click="AddPublisherButton_OnClick"/>
+                        <Button x:Name="editPublisherButton" Command ="{StaticResource EditPublisher}" Content="Edit Publisher" Height="50" VerticalAlignment="Top" Width="90" Margin="0,0,0,-5" />
+                        <Button x:Name="deletePublisherButton" Command ="{StaticResource DeletePublisher}" Content="Delete Publisher" Height="50" VerticalAlignment="Top" Width="100" Margin="0,0,0,-5"/>
                     </ToolBar>
-                    <DataGrid x:Name="publishersTable" Margin="16,55,10,0" VerticalAlignment="Top" Height="294" AutoGenerateColumns="False" ItemsSource="{Binding BorrowInfo}" IsReadOnly="True" CanUserReorderColumns="False">
+                    <DataGrid x:Name="publishersTable" Margin="16,55,10,0" 
+                              VerticalAlignment="Top" 
+                              AutoGenerateColumns="False" ItemsSource="{Binding Publishers}" 
+                              IsReadOnly="True" 
+                              CanUserReorderColumns="False"
+                              Background="White" FontFamily="Bookman Old Style">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="First Name" Binding="{Binding Reader.ReaderId}" />
-                            <DataGridTextColumn Header="Middle Name" Binding="{Binding Reader}" />
-                            <DataGridTextColumn Header="Last Name" Binding="{Binding Book.BookId}" />
+                            <DataGridTextColumn Header="Publisher" Binding="{Binding PublisherName}"  Width="*"/>
+                            <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*"/>
+                            <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

@@ -5,17 +5,32 @@ using Domain.Models;
 using Domain.Repository;
 using Library.ViewModels;
 
-namespace Library
+namespace Library.AddWindows
 {
     public partial class AddNewLanguageWindow: Window
     {
         private readonly IUnitOfWork _unitOfWork;
         private CreatingBookViewModel viewModel;
-        public AddNewLanguageWindow( CreatingBookViewModel model, IUnitOfWork unitOfWork)
+        private int editedLanguageId;
+        private OperationType _operationType;
+
+        public AddNewLanguageWindow( IUnitOfWork unitOfWork, CreatingBookViewModel model)
         {
             InitializeComponent();
             _unitOfWork = unitOfWork;
             viewModel = model;
+            _operationType = OperationType.Create;
+        }
+
+
+        public AddNewLanguageWindow(IUnitOfWork unitOfWork, CreatingBookViewModel model, Language language)
+        {
+            InitializeComponent();
+            _unitOfWork = unitOfWork;
+            viewModel = model;
+            _operationType = OperationType.Edit;
+            editedLanguageId = language.LanguageId;
+            languageTextBox.Text = language.LanguageName;
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -32,20 +47,35 @@ namespace Library
                     .FirstOrDefault(x => x.LanguageName == languageTextBox.Text);
                 if (language == null)
                 {
-                    _unitOfWork.LanguageRepository.Insert(
-                        new Language {LanguageName = languageTextBox.Text});
+                    if (_operationType == OperationType.Create)
+                    {
+                        _unitOfWork.LanguageRepository.Insert(
+                            new Language {LanguageName = languageTextBox.Text});
+                    }
+                    else if(_operationType == OperationType.Edit)
+                    {
+                        var editedLanguage = _unitOfWork.LanguageRepository.GetById(editedLanguageId);
+                        if (editedLanguage != null)
+                        {
+                            editedLanguage.LanguageName = languageTextBox.Text;
+                            _unitOfWork.LanguageRepository.Update(editedLanguage);
+                        }
+
+                    }
+
+
                     _unitOfWork.Save();
                     viewModel.Languages = new ObservableCollection<Language>(_unitOfWork.LanguageRepository.Get().ToList()); 
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("Така мова уже існує!");
+                    MessageBox.Show("Such lahguage alredy exists");
                 }
             }
             else
             {
-                MessageBox.Show("Неможливо додати порожню мову!");
+                MessageBox.Show("Incorrect language!");
             }
         }
     }

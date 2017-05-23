@@ -149,74 +149,128 @@ namespace Library
 
         private void editLanguageCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //    if (booksTable != null)
-            //    {
-            //        var selectedItem = booksTable.SelectedItem;
-            //        e.CanExecute = selectedItem != null;
-            //    }
+            if (languagesTable != null)
+            {
+                var selectedItem = languagesTable.SelectedItem;
+                e.CanExecute = selectedItem != null;
+            }
         }
 
         private void editLanguageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //EditBook();
+            var language = languagesTable.SelectedItem as Language;
+            if (language != null)
+            {
+                var languageCreatingWindow = new AddNewLanguageWindow(_unitOfWork, viewModel, language);
+                languageCreatingWindow.ShowDialog();
+
+            }
         }
 
         private void deleteLanguageCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //if (booksTable != null)
-            //{
-            //    var selectedItem = booksTable.SelectedItem;
-            //    e.CanExecute = selectedItem != null;
-            //}
+            if (languagesTable != null)
+            {
+                var selectedItem = languagesTable.SelectedItem;
+                e.CanExecute = selectedItem != null;
+            }
         }
 
         private void deleteLanguageCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //var messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation",
-            //    MessageBoxButton.YesNo);
-            //if (messageBoxResult == MessageBoxResult.Yes)
-            //{
-            //    DeleteBook();
-            //}
+            var messageBoxResult = MessageBox.Show("Are you sure? All books of this language will be deleted!", "Delete Confirmation",
+                MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                var language = languagesTable.SelectedItem as Language;
+                if (language != null)
+                {
+                    var languageToDelete = _unitOfWork.LanguageRepository.GetById(language.LanguageId);
+                    foreach (var book in _unitOfWork.BookRepository.Get())
+                    {
+                        if (book.Language == languageToDelete)
+                        {
+                            _unitOfWork.BookRepository.Delete(book);
+                        }
+                    }
+
+                    _unitOfWork.LanguageRepository.Delete(languageToDelete);
+                    _unitOfWork.Save();
+                    viewModel.Languages =
+                        new ObservableCollection<Language>(_unitOfWork.LanguageRepository.Get().ToList());
+
+                }
+            }
         }
 
         private void editPublisherCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //    if (booksTable != null)
-            //    {
-            //        var selectedItem = booksTable.SelectedItem;
-            //        e.CanExecute = selectedItem != null;
-            //    }
+            if (publishersTable != null)
+            {
+                var selectedItem = publishersTable.SelectedItem;
+                e.CanExecute = selectedItem != null;
+            }
         }
 
         private void editPublisherCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //EditBook();
+            var publisher = publishersTable.SelectedItem as Publisher;
+            if (publisher != null)
+            {
+                var publisherCreatingWindow = new AddNewPublisherWindow(_unitOfWork, viewModel, publisher);
+                publisherCreatingWindow.ShowDialog();
+
+            }
         }
 
         private void deletePublisherCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //if (booksTable != null)
-            //{
-            //    var selectedItem = booksTable.SelectedItem;
-            //    e.CanExecute = selectedItem != null;
-            //}
+            if (publishersTable != null)
+            {
+                var selectedItem = publishersTable.SelectedItem;
+                e.CanExecute = selectedItem != null;
+            }
         }
 
         private void deletePublisherCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            //var messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation",
-            //    MessageBoxButton.YesNo);
-            //if (messageBoxResult == MessageBoxResult.Yes)
-            //{
-            //    DeleteBook();
-            //}
+            var messageBoxResult = MessageBox.Show("Are you sure? All books of this publisher will be deleted!", "Delete Confirmation",
+               MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                var publisher = publishersTable.SelectedItem as Publisher;
+                if (publisher != null)
+                {
+                    var publisherToDelete = _unitOfWork.PublisherRepository.GetById(publisher.PublisherId);
+                    foreach (var book in _unitOfWork.BookRepository.Get())
+                    {
+                        if (book.Publisher == publisherToDelete)
+                        {
+                            _unitOfWork.BookRepository.Delete(book);
+                        }
+                    }
+
+                    _unitOfWork.PublisherRepository.Delete(publisherToDelete);
+                    _unitOfWork.Save();
+                    viewModel.Publishers =
+                        new ObservableCollection<Publisher>(_unitOfWork.PublisherRepository.Get().ToList());
+
+                }
+            }
         }
 
         private void AddAuthorButton_OnClick(object sender, RoutedEventArgs e)
         {
             AddNewAuthorWindow addNewAuthorWindow = new AddNewAuthorWindow(_unitOfWork, viewModel);
             addNewAuthorWindow.ShowDialog();
+        }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddNewBookWindow addNewBookWindow = new AddNewBookWindow(_unitOfWork, _booksDisplayViewModelToRemember,
+                bookFromPreviousWindow, _operationTypeToRemember);
+            addNewBookWindow.Show();
+            Close();
         }
 
         private void AddGenreButton_OnClick(object sender, RoutedEventArgs e)
@@ -227,12 +281,18 @@ namespace Library
 
         }
 
-        private void backButton_Click(object sender, RoutedEventArgs e)
+        private void AddLanguageButton_OnClick(object sender, RoutedEventArgs e)
         {
-            AddNewBookWindow addNewBookWindow =  new AddNewBookWindow(_unitOfWork, _booksDisplayViewModelToRemember, 
-                bookFromPreviousWindow, _operationTypeToRemember);
-            addNewBookWindow.Show();
-            Close();
+            AddNewLanguageWindow addNewLanguageWindow = new AddWindows.AddNewLanguageWindow(
+                _unitOfWork, viewModel);
+            addNewLanguageWindow.ShowDialog();
+        }
+
+        private void AddPublisherButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AddNewPublisherWindow addNewPublisherWindow = new AddNewPublisherWindow(
+                 _unitOfWork, viewModel);
+            addNewPublisherWindow.ShowDialog();
         }
     }
 }

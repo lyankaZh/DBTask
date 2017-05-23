@@ -9,14 +9,30 @@ namespace Library.AddWindows
 {
     public partial class AddNewPublisherWindow
     {
-        readonly IUnitOfWork _unitOfWork = new UnitOfWork();
+        readonly IUnitOfWork _unitOfWork;
         private CreatingBookViewModel viewModel;
+        private int editedPublisherId;
+        private OperationType operationType;
 
-        public AddNewPublisherWindow(CreatingBookViewModel model, IUnitOfWork unitOfWork)
+        public AddNewPublisherWindow(IUnitOfWork unitOfWork, CreatingBookViewModel model)
         {
             InitializeComponent();
             viewModel = model;
             _unitOfWork = unitOfWork;
+            operationType = OperationType.Create;
+        }
+
+        public AddNewPublisherWindow(IUnitOfWork unitOfWork, CreatingBookViewModel model, Publisher publisher)
+        {
+            InitializeComponent();
+            viewModel = model;
+            _unitOfWork = unitOfWork;
+            operationType = OperationType.Edit;
+            editedPublisherId = publisher.PublisherId;
+            publisherNameTextBox.Text = publisher.PublisherName;
+            cityTextBox.Text = publisher.City;
+            countryTextBox.Text = publisher.Country;
+
         }
 
         private void cancelButtonCopy_Click(object sender, RoutedEventArgs e)
@@ -36,27 +52,40 @@ namespace Library.AddWindows
                     x.City == cityTextBox.Text && x.Country == countryTextBox.Text);
                 if (publisher == null)
                 {
-                    _unitOfWork.PublisherRepository.Insert(
-                        new Publisher
+                    if (operationType == OperationType.Create)
+                    {
+                        _unitOfWork.PublisherRepository.Insert(
+                            new Publisher
+                            {
+                                PublisherName = publisherNameTextBox.Text,
+                                City = cityTextBox.Text,
+                                Country = countryTextBox.Text
+                            }
+                        );
+                    }
+                    else if (operationType == OperationType.Edit)
+                    {
+                        var editedPublisher = _unitOfWork.PublisherRepository.GetById(editedPublisherId);
+                        if (editedPublisher != null)
                         {
-                            PublisherName = publisherNameTextBox.Text,
-                            City = cityTextBox.Text,
-                            Country = countryTextBox.Text
+                            editedPublisher.PublisherName = publisherNameTextBox.Text;
+                            editedPublisher.City = cityTextBox.Text;
+                            editedPublisher.Country = countryTextBox.Text;
+                            _unitOfWork.PublisherRepository.Update(editedPublisher);
                         }
-                       );
-
+                    }
                     _unitOfWork.Save();
                     viewModel.Publishers = new ObservableCollection<Publisher>(_unitOfWork.PublisherRepository.Get().ToList());
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("Таке видавництво уже існує!");
+                    MessageBox.Show("Such publisher already exists!");
                 }
             }
             else
             {
-                MessageBox.Show("Неможливо додати порожнє видавництво!");
+                MessageBox.Show("Incorrect publisher!");
             }
         }
     }
